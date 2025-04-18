@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
+    #region Register
     // Registro de usuário
     public function register(Request $request)
     {
@@ -62,7 +63,9 @@ class AuthController extends Controller
             ], 500);
         }
     }
+    #endregion Register
 
+    #region Login
     // Login
     public function login(Request $request)
     {
@@ -95,7 +98,9 @@ class AuthController extends Controller
             'user' => auth()->user()
         ]);
     }
+    #endregion Login
 
+    #region Logout
     // Logout
     public function logout()
     {
@@ -114,7 +119,9 @@ class AuthController extends Controller
             ], 500);
         }
     }
+    #endregion Logout
 
+    #region Refresh
     // Refresh Token
     public function refresh()
     {
@@ -133,4 +140,5 @@ class AuthController extends Controller
             ], 500);
         }
     }
+    #endregion Refresh
 }

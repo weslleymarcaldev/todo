@@ -9,6 +9,7 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class TodoListController extends Controller
 {
+    #region Index
     // Exibir todas as listas do usuário
     public function index()
     {
@@ -20,7 +21,9 @@ class TodoListController extends Controller
 
         return response()->json($lists);
     }
+    #endregion Index
 
+    #region Store
     // Criar uma nova lista
     public function store(Request $request)
     {
@@ -36,4 +39,5 @@ class TodoListController extends Controller
 
         return response()->json($list, 201);
     }
+    #endregion Store
 }

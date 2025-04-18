@@ -9,6 +9,7 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class TaskController extends Controller
 {
+    #region Index
     // Exibir tarefas de uma lista
     public function index(Request $request)
     {
@@ -22,7 +23,9 @@ class TaskController extends Controller
 
         return response()->json($tasks);
     }
+    #endregion Index
 
+    #region Store
     // Criar uma nova tarefa
     public function store(Request $request)
     {
@@ -41,22 +44,38 @@ class TaskController extends Controller
 
         return response()->json($task, 201);
     }
+    #endregion Store
 
-    // Alterar o status de uma tarefa
+    #region Update
+    // Atualizar uma tarefa (descrição e/ou status)
     public function update(Request $request, $id)
     {
         $task = Task::find($id);
 
-        if (!$task) {
-            return response()->json(['error' => 'Task not found'], 404);
-        }
-
-        $task->completed = !$task->completed;
-        $task->save();
-
-        return response()->json($task);
+    if (!$task) {
+        return response()->json(['error' => 'Task not found'], 404);
     }
 
+    $request->validate([
+        'description' => 'nullable|string|max:255',
+        'completed' => 'nullable|boolean',
+    ]);
+
+    if ($request->has('description')) {
+        $task->description = $request->description;
+    }
+
+    if ($request->has('completed')) {
+        $task->completed = $request->completed;
+    }
+
+    $task->save();
+
+    return response()->json($task);
+}
+#endregion Update
+
+    #region Destroy
     // Excluir uma tarefa
     public function destroy($id)
     {
@@ -70,4 +89,5 @@ class TaskController extends Controller
 
         return response()->json(['message' => 'Task deleted successfully']);
     }
+    #endregion Destroy
 }
