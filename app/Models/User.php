@@ -8,10 +8,17 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\TodoList;
+use App\Models\Task;
 
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    public function todoLists()
+{
+    return $this->hasMany(TodoList::class);
+}
 
     /**
      * The attributes that are mass assignable.
