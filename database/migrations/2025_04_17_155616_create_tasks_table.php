@@ -8,7 +8,8 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('to_do_list_id')->constrained('to_do_lists')->onDelete('cascade');
+            $table->unsignedBigInteger('to_do_list_id');
+            $table->foreign('to_do_list_id')->references('id')->on('todo_lists')->onDelete('no action');
             $table->string('description');
             $table->boolean('completed')->default(false);
             $table->timestamps();

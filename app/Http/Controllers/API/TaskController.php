@@ -26,6 +26,8 @@ class TaskController extends Controller
     // Criar uma nova tarefa
     public function store(Request $request)
     {
+        $list = JWTAuth::parseToken()->authenticate()->todoLists()->find($request->list_id);
+
         $request->validate([
             'description' => 'required|string|max:255',
             'list_id' => 'required|integer|exists:todo_lists,id'
@@ -34,7 +36,7 @@ class TaskController extends Controller
         $task = Task::create([
             'description' => $request->description,
             'to_do_list_id' => $request->list_id,
-            'completed' => false,
+            'completed' => false
         ]);
 
         return response()->json($task, 201);
